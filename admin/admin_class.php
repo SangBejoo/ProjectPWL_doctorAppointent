@@ -31,22 +31,15 @@ Class Action {
 	function login2(){
 		extract($_POST);
 		$qry = $this->db->query("SELECT * FROM users where username = '".$email."' and password = '".md5($password)."' ");
-		if ($_SESSION['ipul'] == $captchareg){
-		    if($qry->num_rows > 0){
+		if($qry->num_rows > 0){
 			foreach ($qry->fetch_array() as $key => $value) {
 				if($key != 'passwors' && !is_numeric($key))
 					$_SESSION['login_'.$key] = $value;
-					return 1;
 			}
-				
-    		}else{
-    			return 3;
-    		}
-		    
+				return 1;
 		}else{
-		    return 2;
+			return 3;
 		}
-		
 	}
 	function logout(){
 		session_destroy();

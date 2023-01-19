@@ -1,6 +1,6 @@
 <?php session_start() ?>
 <div class="container-fluid">
-<form action="" id="login-frm">
+	<form action="" id="login-frm">
 		<div class="form-group">
 			<label for="" class="control-label">Email</label>
 			<input type="email" name="email" required="" class="form-control">
@@ -8,13 +8,8 @@
 		<div class="form-group">
 			<label for="" class="control-label">Password</label>
 			<input type="password" name="password" required="" class="form-control">
+			<small><a href="javascript:void(0)" id="new_account">Create New Account</a></small>
 		</div>
-		<div class="form-group">
-            <img src="creg.php" alt="CAPTCHA" class="captcha-image-mem" style="border-radius: 10px; margin-bottom: 12px;">
-            <a class="bi bi-arrow-counterclockwise refresh-captcha" id="refresh-captcha" style="font-size: 9px; color: black;" onClick="refLogin()"href="#">Refresh Captcha</a>
-            <input type="text" placeholder="Captcha (UPPERCASE)" class="form-control" name="captchareg" id="captchareg" required autocomplete="off">
-            <small>or <a href="javascript:void(0)" id="new_account">Create New Account</a></small>
-        </div>
 		<button class="button btn btn-info btn-sm">Login</button>
 	</form>
 </div>
@@ -26,9 +21,6 @@
 </style>
 
 <script>
-	function refLogin() {
-		document.querySelector(".captcha-image-mem").src = 'creg.php?' + Date.now();
-	}
 	$('#new_account').click(function(){
 		uni_modal("Create an Account",'signup.php?redirect=index.php?page=checkout')
 	})
@@ -49,14 +41,11 @@
 			success:function(resp){
 				if(resp == 1){
 					location.href ='<?php echo isset($_GET['redirect']) ? $_GET['redirect'] : 'index.php?page=home' ?>';
-				}else if (resp == 2){
-					$('#login-frm').prepend('<div class="alert alert-danger">Invalid Captcha</div>')
-					$('#login-frm button[type="submit"]').removeAttr('disabled').html('Login');
 				}else{
 					$('#login-frm').prepend('<div class="alert alert-danger">Email or password is incorrect.</div>')
 					$('#login-frm button[type="submit"]').removeAttr('disabled').html('Login');
 				}
-			}		
+			}
 		})
 	})
 </script>
